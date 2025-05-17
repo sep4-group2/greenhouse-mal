@@ -5,8 +5,9 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, r2_score
+import os
+from datetime import datetime
 import joblib
-
 
 def load_and_clean_data(filepath: str) -> pd.DataFrame:
     df = pd.read_csv(filepath)
@@ -76,11 +77,31 @@ def evaluate_model(model, X_test, y_test):
     return rmse, r2
 
 
-def save_model(model, scaler, model_path='soil_moisture_model.pkl', scaler_path='scaler.pkl'):
+def save_model(model, scaler, model_filename='soil_moisture_model.pkl', scaler_filename='scaler.pkl'):
+    if os.path.exists('/app'):
+        models_dir = '/app/models'
+    else:
+        models_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'models')
+
+    # Ensure the models directory exists
+    os.makedirs(models_dir, exist_ok=True)
+
+    # Construct full file paths
+    model_path = os.path.join(models_dir, model_filename)
+    scaler_path = os.path.join(models_dir, scaler_filename)
+
+    # Save model and scaler using joblib
     joblib.dump(model, model_path)
     joblib.dump(scaler, scaler_path)
+
     print(f"Model saved to {model_path}")
     print(f"Scaler saved to {scaler_path}")
+
+    # Save the last updated timestamp
+    timestamp_path = os.path.join(models_dir, 'last_updated.txt')
+    with open(timestamp_path, 'w') as f:
+        f.write(f"Model last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"Timestamp saved to {timestamp_path}")
 
 
 def main():
