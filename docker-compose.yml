@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  mal-model:
+    build:
+      context: ./src/mal-model
+    volumes:
+      - ./models:/app/models  # share trained model
+
+  mal-api:
+    build:
+      context: ./src/mal-api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./models:/app/models  # access trained model
+    depends_on:
+      - mal-model  # ensure model trains before API runs
