@@ -10,6 +10,7 @@ on:
 permissions:
   contents: read
   packages: write
+  id-token: write  # Added permission for federated token
 
 jobs:
   build-and-push:
