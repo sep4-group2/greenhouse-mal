@@ -34,6 +34,7 @@ jobs:
         with:
           context: ./  # Set build context to the root of the repository
           file: ./src/mal-api/Dockerfile
+          platforms: linux/amd64,linux/arm64  # Add ARM architecture
           tags: |
             ghcr.io/${{ github.repository_owner }}/mal-api:latest
             ghcr.io/${{ github.repository_owner }}/mal-api:${{ github.sha }}
