@@ -32,7 +32,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./src/mal-api
+          context: ./
           file: ./src/mal-api/Dockerfile
           tags: |
             ghcr.io/${{ github.repository_owner }}/mal-api:latest
