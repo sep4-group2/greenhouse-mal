@@ -13,6 +13,6 @@ services:
     build:
       context: ./src/mal-api
     ports:
-      - "${PORT:-5000}:${PORT:-5000}"  # Use dynamic port from environment variable
+      - "${PORT:-1337}:${PORT:-1337}"  # Use dynamic port from environment variable
     volumes:
       - ./models:/app/models  # access trained model
