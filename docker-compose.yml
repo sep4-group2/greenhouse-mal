@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  mal-model:
+    build:
+      context: ./src/mal-model
+    volumes:
+      - ./models:/app/models  # share trained model
+    profiles:
+      - build-model  # Add profile for selective execution
+
+  mal-api:
+    build:
+      context: ./src/mal-api
+    ports:
+      - "${PORT:-1337}:${PORT:-1337}"  # Use dynamic port from environment variable
+    volumes:
+      - ./models:/app/models  # access trained model

@@ -1,16 +1,17 @@
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 WORKDIR /app
+COPY . /app
 
-# Copy requirements and install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy model files from the models directory in the root context
+COPY models/soil_moisture_model.pkl /app/models/
+COPY models/scaler_X.save /app/models/
+COPY models/scaler_y.save /app/models/
 
-# Copy application code
-COPY main.py .
+# Set default environment variable for the port
+ENV PORT=1337
 
-# Expose the port the app runs on
-EXPOSE 5000
+RUN pip install --no-cache-dir -r /app/src/mal-api/requirements.txt
 
-# Command to run the application
-CMD ["python", "main.py"]
+EXPOSE 1337
+CMD ["python", "/app/src/mal-api/main.py"]
