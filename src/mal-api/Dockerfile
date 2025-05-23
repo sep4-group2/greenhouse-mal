@@ -14,4 +14,4 @@ ENV PORT=5000
 RUN pip install --no-cache-dir -r /app/src/mal-api/requirements.txt
 
 EXPOSE 5000
-CMD ["python", "main.py"]
+CMD ["python", "/app/src/mal-api/main.py"]
