@@ -6,13 +6,13 @@ services:
       context: ./src/mal-model
     volumes:
       - ./models:/app/models  # share trained model
+    profiles:
+      - build-model  # Add profile for selective execution
 
   mal-api:
     build:
       context: ./src/mal-api
     ports:
-      - "5000:5000"
+      - "${PORT:-5000}:${PORT:-5000}"  # Use dynamic port from environment variable
     volumes:
       - ./models:/app/models  # access trained model
-    depends_on:
-      - mal-model  # ensure model trains before API runs
