@@ -11,7 +11,7 @@ COPY models/scaler_y.save /app/models/
 # Set default environment variable for the port
 ENV PORT=5000
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r /app/src/mal-api/requirements.txt
 
 EXPOSE 5000
 CMD ["python", "main.py"]
